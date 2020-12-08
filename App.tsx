@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, Component } from 'react';
+import { StatusBar } from "expo-status-bar";
+import React, { useState, Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,22 +13,11 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Select from "react-select";
 
 const { width } = Dimensions.get("screen");
 
 const containerPaddingTop =
   Platform.OS === "ios" ? 0 : RNStatusBar.currentHeight;
-
-const options = [
-  { value: "楽天市場"},
-  { value: "Amazon"},
-  { value: "Yahoo!" },
-];
-
-const MyComponent = () => (
-  <Select options={options} />
-  )
 
 export default function App() {
   return (
@@ -45,7 +34,6 @@ export default function App() {
         <View>
           <Text style={styles.boxname}>モール</Text>
           <TouchableOpacity style={styles.textbox}>
-            {MyComponent}
           </TouchableOpacity>
 
           {/* <TextInput style={styles.textbox} placeholder="選択してください" /> */}

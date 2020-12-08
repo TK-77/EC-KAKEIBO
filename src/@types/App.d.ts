@@ -1,1 +1,1 @@
-declare module "react-select";
+declare module "react-native-paper";
