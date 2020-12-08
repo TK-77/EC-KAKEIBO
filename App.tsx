@@ -21,12 +21,14 @@ const containerPaddingTop =
   Platform.OS === "ios" ? 0 : RNStatusBar.currentHeight;
 
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: "楽天市場"},
+  { value: "Amazon"},
+  { value: "Yahoo!" },
 ];
 
-const MyComponent = () => <Select options={options} />;
+const MyComponent = () => (
+  <Select options={options} />
+  )
 
 export default function App() {
   return (
@@ -42,7 +44,11 @@ export default function App() {
         </View>
         <View>
           <Text style={styles.boxname}>モール</Text>
-          <TextInput style={styles.textbox} placeholder="選択してください" />
+          <TouchableOpacity style={styles.textbox}>
+            {MyComponent}
+          </TouchableOpacity>
+
+          {/* <TextInput style={styles.textbox} placeholder="選択してください" /> */}
           <Text style={styles.boxname}>出店プラン</Text>
           <TextInput style={styles.textbox} placeholder="選択してください" />
           <Text style={styles.boxname}>当月売上</Text>
