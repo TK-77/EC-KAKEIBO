@@ -11,13 +11,17 @@ import {
   StatusBar as RNStatusBar,
   Dimensions,
   KeyboardAvoidingView,
+  Picker,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 
 const { width } = Dimensions.get("screen");
 
 const containerPaddingTop =
   Platform.OS === "ios" ? 0 : RNStatusBar.currentHeight;
+
+const state = {area: 2,};
 
 export default function App() {
   return (
@@ -29,12 +33,25 @@ export default function App() {
       > */}
       <SafeAreaView style={styles.container}>
         <View>
+          <Picker
+            style={styles.picker}
+            itemStyle={styles.pickerItem}
+            selectedValue={state.area}
+            onValueChange={(value) => useState({ area: value })
+          }
+          >
+            <Picker.Item label="楽天市場" value={1} />
+            <Picker.Item label="Amazon" value={2} />
+            <Picker.Item label="Yahoo!" value={3} />
+          </Picker>
+        </View>
+
+        <View>
           <Text style={styles.titleInput}>EC家計簿</Text>
         </View>
         <View>
           <Text style={styles.boxname}>モール</Text>
-          <TouchableOpacity style={styles.textbox}>
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.textbox}></TouchableOpacity>
 
           {/* <TextInput style={styles.textbox} placeholder="選択してください" /> */}
           <Text style={styles.boxname}>出店プラン</Text>
@@ -113,5 +130,18 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  picker: {
+    width: 200,
+    backgroundColor: "#FFF",
+  },
+  pickerItem: {
+    color: "blue",
   },
 });
