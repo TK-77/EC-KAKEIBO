@@ -8,22 +8,44 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  Button,
   StatusBar as RNStatusBar,
   Dimensions,
   KeyboardAvoidingView,
-  Picker,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import Select from "react-select";
 
 const { width } = Dimensions.get("screen");
 
 const containerPaddingTop =
   Platform.OS === "ios" ? 0 : RNStatusBar.currentHeight;
 
-const state = {area: 2,};
+
+
+
 
 export default function App() {
+  const [sales, setSales] = React.useState("");
+  const [ad, setAd] = React.useState("");
+  const [feeResult, setFeeResult] = React.useState(0);
+  const [costResult, setCostResult] = React.useState(0);
+
+  const calcFee = () => {
+    const feeResult = Number(sales) * 0.01;
+    setFeeResult(feeResult);
+  }
+
+  const calcCost = () => {
+    const costResult = Number(sales) + Number(ad) + Number(feeResult);
+    setCostResult(costResult);
+  }
+
+  const calcResult = () => {
+    calcFee();
+    calcCost();
+  }
+
   return (
     <KeyboardAwareScrollView>
       {/* <KeyboardAvoidingView
@@ -33,51 +55,39 @@ export default function App() {
       > */}
       <SafeAreaView style={styles.container}>
         <View>
-          <Picker
-            style={styles.picker}
-            itemStyle={styles.pickerItem}
-            selectedValue={state.area}
-            onValueChange={(value) => useState({ area: value })
-          }
-          >
-            <Picker.Item label="楽天市場" value={1} />
-            <Picker.Item label="Amazon" value={2} />
-            <Picker.Item label="Yahoo!" value={3} />
-          </Picker>
-        </View>
-
-        <View>
           <Text style={styles.titleInput}>EC家計簿</Text>
         </View>
         <View>
           <Text style={styles.boxname}>モール</Text>
-          <TouchableOpacity style={styles.textbox}></TouchableOpacity>
-
-          {/* <TextInput style={styles.textbox} placeholder="選択してください" /> */}
+          <TextInput style={styles.textbox} placeholder="選択してください" />
           <Text style={styles.boxname}>出店プラン</Text>
           <TextInput style={styles.textbox} placeholder="選択してください" />
+
           <Text style={styles.boxname}>当月売上</Text>
           <TextInput
             style={styles.textbox}
             placeholder="入力してください"
+            onChangeText={(text) => setSales(text)}
+            value={sales}
             keyboardType="numeric"
           />
+
           <Text style={styles.boxname}>広告費</Text>
           <TextInput
             style={styles.textbox}
             placeholder="入力してください"
+            onChangeText={(text) => setAd(text)}
+            value={ad}
             // text-align="right"
             keyboardType="numeric"
           />
           <Text style={styles.boxname}>手数料</Text>
-          <Text style={styles.textbox}>計算結果</Text>
+          <Text style={styles.textbox}>{feeResult}</Text>
           <Text style={styles.boxname}>コスト合計</Text>
-          <Text style={styles.textbox}>計算結果</Text>
+          <Text style={styles.textbox}>{costResult}</Text>
 
           <View style={styles.button}>
-            <TouchableOpacity>
-              <Text style={styles.buttonText}>計算</Text>
-            </TouchableOpacity>
+            <Button title="計算" onPress={calcResult} />
           </View>
           <StatusBar style="auto" />
         </View>
@@ -130,18 +140,5 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  picker: {
-    width: 200,
-    backgroundColor: "#FFF",
-  },
-  pickerItem: {
-    color: "blue",
   },
 });
