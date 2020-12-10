@@ -31,7 +31,7 @@ export default function App() {
   const [ad, setAd] = React.useState("");
   const [feeResult, setFeeResult] = React.useState(0);
   const [costResult, setCostResult] = React.useState(0);
-  // const [selectedValue, setSelectedValue] = useState("java");
+  const [shopCost, setShopCost] = React.useState(0);
 
   const rates = [0.024, 0.026, 0.028, 0.03, 0.04];
 
@@ -54,34 +54,36 @@ export default function App() {
     return feeResult;
   };
 
-  const calcCost = (ad: number, feeResult: number) => {
-    const costResult = ad + feeResult;
+  const calcCost = (ad: number, feeResult: number, shopCost: number) => {
+    const costResult = ad + feeResult + shopCost;
     return costResult;
   };
 
   const calcResult = () => {
     const feeResult = calcFee(Number(sales));
-    const costResult = calcCost(Number(ad), feeResult);
+    const costResult = calcCost(Number(ad), feeResult, shopCost);
 
     setFeeResult(feeResult);
     setCostResult(costResult);
   };
 
-  // const shopCost = [19500, 50000, 100000];
+  const shopCostList = [19500, 50000, 100000];
 
-  // const shopCostResult = () => {
-  //   let shopCost = "";
-  //   switch (items.value) {
-  //     case "ganba":
-  //       return shopCost[0];
-  //     case "standard":
-  //       return shopCost[1];
-  //     case "mega":
-  //       return shopCost[2];
-  //     default: 0;
-  //       break;
-  //   }
-  // };
+  const changeShopCost = (planName: string) => {
+    switch (planName) {
+      case "ganba":
+        setShopCost(shopCostList[0]);
+        break;
+      case "standard":
+        setShopCost(shopCostList[1]);
+        break;
+      case "mega":
+        setShopCost(shopCostList[2]);
+        break;
+      default: 0;
+        break;
+    }
+  };
 
   return (
     <KeyboardAwareScrollView>
@@ -116,7 +118,7 @@ export default function App() {
 
               <View style={styles.selectBox}>
                 <RNPickerSelect
-                  onValueChange={(value: string) => console.log(value)}
+                  onValueChange={(value: string) => changeShopCost(value)}
                   items={[
                     { label: "がんばれ!プラン", value: "ganba" },
                     { label: "スタンダードプラン", value: "standard" },
@@ -148,7 +150,7 @@ export default function App() {
               />
 
               <Text style={styles.boxname}>出店費用</Text>
-              <Text style={styles.textBox}></Text>
+              <Text style={styles.textBox}>{shopCost}</Text>
 
               <Text style={styles.boxname}>手数料</Text>
               <Text style={styles.textBox}>{feeResult}</Text>
