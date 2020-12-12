@@ -244,10 +244,16 @@ export function Input() {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <Button 
-                onPress={toMain} 
-                title="toMain" 
-              />
+              <Button onPress={toMain} title="toMain" />
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text>Main</Text>
+              </View>
 
               <StatusBar style="auto" />
             </View>
