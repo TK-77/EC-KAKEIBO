@@ -33,6 +33,7 @@ export default function App() {
   const [feeResult, setFeeResult] = React.useState(0);
   const [costResult, setCostResult] = React.useState(0);
   const [shopCost, setShopCost] = React.useState(0);
+  const [plan, setPlan] = React.useState([{label : '', value: ''}]);
 
   const rates = [0.025, 0.027, 0.029, 0.031, 0.041];
 
@@ -92,6 +93,54 @@ export default function App() {
         break;
     }
   };
+  
+
+  const plans = [
+    // "rakuten": [
+    [
+      { label: "がんばれプラン", value: "ganba" },
+      { label: "スタンダードプラン", value: "standard" },
+      { label: "メガプラン", value: "mega" },
+    ],
+
+    // "amazon": [
+    [
+      { label: "小口出品", value: "koguti" },
+      { label: "大口出品", value: "oguti" },
+    ],
+
+    // "yahoo!": [
+    [
+      { label: "Yahoo!ショッピング" , value:"yahoo!shopping" }
+    ]
+  ];
+
+  // const planY = [
+  // ];
+
+  // const mallList = [planR, planA, planY];
+
+  // const changeMallList = (mallName: string) => {
+  //   switch (mallName) {
+  //     case "rakuten":
+  //       (mallList[0]);
+  //       break;
+  //     case "amazon":
+  //       (mallList[1]);
+  //       break;
+  //     case "yahoo!":
+  //       (mallList[2]);
+  //       break;
+  //     default:
+  //       0;
+  //       break;
+  //   }
+  //   console.log(changeMallList);
+  // }
+
+  // const mallSelect = () => {
+
+  // };
 
   return (
     <KeyboardAwareScrollView>
@@ -109,11 +158,14 @@ export default function App() {
             <Text style={styles.boxname}>ECモール</Text>
             <View style={styles.selectBox}>
               <RNPickerSelect
-                onValueChange={(value: string) => console.log(value)}
+                // onValueChange={(value: string) => changeMallList(value)}
+                onValueChange={(value: number) => {
+                  setPlan(plans[value]);
+                }}
                 items={[
-                  { label: "楽天市場", value: "rakuten" },
-                  { label: "Amazon", value: "amazon" },
-                  { label: "Yahoo!", value: "yahoo!" },
+                  { label: "楽天市場", value: 0 },
+                  { label: "Amazon", value: 1 },
+                  { label: "Yahoo!", value: 2 },
                 ]}
                 style={{ ...pickerSelectStyles }}
                 placeholder={{ label: "選択してください", value: "" }}
@@ -127,11 +179,14 @@ export default function App() {
               <View style={styles.selectBox}>
                 <RNPickerSelect
                   onValueChange={(value: string) => changeShopCost(value)}
-                  items={[
-                    { label: "がんばれ!プラン", value: "ganba" },
-                    { label: "スタンダードプラン", value: "standard" },
-                    { label: "メガショッププラン", value: "mega" },
-                  ]}
+                  items={
+                    plan
+                    // [
+                    //   { label: "がんばれ!プラン", value: "ganba" },
+                    //   { label: "スタンダードプラン", value: "standard" },
+                    //   { label: "メガショッププラン", value: "mega" },
+                    // ]
+                  }
                   style={{ ...pickerSelectStyles }}
                   placeholder={{ label: "選択してください", value: "" }}
                   Icon={() => <Text style={styles.triangle}>▼</Text>}
