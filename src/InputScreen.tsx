@@ -18,6 +18,7 @@ import {
   Picker,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+// import { white } from "react-native-paper/lib/typescript/src/styles/colors";
 // import Select from "react-select";
 // import { RadioButton } from "react-native-paper";
 import RNPickerSelect from "react-native-picker-select";
@@ -154,112 +155,94 @@ export function Input() {
 
   return (
     <KeyboardAwareScrollView>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={90}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={styles.keyboardAvoidingView}
-      >
-        <SafeAreaView style={styles.container}>
-          <View>
-            {/* <View style={styles.titleView}> */}
-            <Text style={styles.titleText}>EC家計簿</Text>
-            {/* </View> */}
+      <SafeAreaView style={styles.container}>
+        <View>
+          {/* <View style={styles.titleView}> */}
+          <Text style={styles.titleText}>EC家計簿</Text>
+          {/* </View> */}
 
-            <Text style={styles.boxname}>ECモール</Text>
+          <Text style={styles.boxname}>ECモール</Text>
+          <View style={styles.selectBox}>
+            <RNPickerSelect
+              // onValueChange={(value: string) => changeMallList(value)}
+              onValueChange={(value: number) => {
+                setPlan(plans[value]);
+              }}
+              items={[
+                { label: "楽天市場", value: 0 },
+                { label: "Amazon", value: 1 },
+                { label: "Yahoo!", value: 2 },
+              ]}
+              style={{ ...pickerSelectStyles }}
+              placeholder={{ label: "選択してください", value: "" }}
+              Icon={() => <Text style={styles.triangle}>▼</Text>}
+            />
+          </View>
+
+          <View>
+            <Text style={styles.boxname}>出店プラン</Text>
+
             <View style={styles.selectBox}>
               <RNPickerSelect
-                // onValueChange={(value: string) => changeMallList(value)}
-                onValueChange={(value: number) => {
-                  setPlan(plans[value]);
-                }}
-                items={[
-                  { label: "楽天市場", value: 0 },
-                  { label: "Amazon", value: 1 },
-                  { label: "Yahoo!", value: 2 },
-                ]}
+                onValueChange={(value: string) => changeShopCost(value)}
+                items={
+                  plan
+                  // [
+                  //   { label: "がんばれ!プラン", value: "ganba" },
+                  //   { label: "スタンダードプラン", value: "standard" },
+                  //   { label: "メガショッププラン", value: "mega" },
+                  // ]
+                }
                 style={{ ...pickerSelectStyles }}
                 placeholder={{ label: "選択してください", value: "" }}
                 Icon={() => <Text style={styles.triangle}>▼</Text>}
               />
             </View>
 
-            <View>
-              <Text style={styles.boxname}>出店プラン</Text>
+            <Text style={styles.boxname}>当月売上</Text>
+            <TextInput
+              style={styles.textBox}
+              placeholder="入力してください"
+              onChangeText={(text) => setSales(text)}
+              value={sales}
+              keyboardType="numeric"
+            />
 
-              <View style={styles.selectBox}>
-                <RNPickerSelect
-                  onValueChange={(value: string) => changeShopCost(value)}
-                  items={
-                    plan
-                    // [
-                    //   { label: "がんばれ!プラン", value: "ganba" },
-                    //   { label: "スタンダードプラン", value: "standard" },
-                    //   { label: "メガショッププラン", value: "mega" },
-                    // ]
-                  }
-                  style={{ ...pickerSelectStyles }}
-                  placeholder={{ label: "選択してください", value: "" }}
-                  Icon={() => <Text style={styles.triangle}>▼</Text>}
-                />
-              </View>
+            <Text style={styles.boxname}>広告費</Text>
+            <TextInput
+              style={styles.textBox}
+              placeholder="入力してください"
+              onChangeText={(text) => setAd(text)}
+              value={ad}
+              // text-align="right"
+              keyboardType="numeric"
+            />
 
-              <Text style={styles.boxname}>当月売上</Text>
-              <TextInput
-                style={styles.textBox}
-                placeholder="入力してください"
-                onChangeText={(text) => setSales(text)}
-                value={sales}
-                keyboardType="numeric"
-              />
+            <Text style={styles.boxname}>出店費用</Text>
+            <Text style={styles.textBox}>{shopCost.toLocaleString()}</Text>
 
-              <Text style={styles.boxname}>広告費</Text>
-              <TextInput
-                style={styles.textBox}
-                placeholder="入力してください"
-                onChangeText={(text) => setAd(text)}
-                value={ad}
-                // text-align="right"
-                keyboardType="numeric"
-              />
+            <Text style={styles.boxname}>手数料</Text>
+            <Text style={styles.textBox}>{feeResultView.toLocaleString()}</Text>
 
-              <Text style={styles.boxname}>出店費用</Text>
-              <Text style={styles.textBox}>{shopCost.toLocaleString()}</Text>
-
-              <Text style={styles.boxname}>手数料</Text>
-              <Text style={styles.textBox}>
-                {feeResultView.toLocaleString()}
+            <Text style={styles.boxname}>コスト合計</Text>
+            <View style={styles.textBox}>
+              <Text style={styles.textInput}>
+                {costResultView.toLocaleString()}
               </Text>
-
-              <Text style={styles.boxname}>コスト合計</Text>
-              <View style={styles.textBox}>
-                <Text style={styles.textInput}>
-                  {costResultView.toLocaleString()}
-                </Text>
-              </View>
-
-              <View style={styles.button}>
-                <TouchableOpacity>
-                  <Text style={styles.buttonText} onPress={calcResult}>
-                    計算
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <Button onPress={toMain} title="toMain" />
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text>Main</Text>
-              </View>
-
-              <StatusBar style="auto" />
             </View>
+
+            <View style={styles.button}>
+              <TouchableOpacity>
+                <Text style={styles.buttonText} onPress={calcResult}>
+                  計算
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.pate}></View>
+            <StatusBar style="auto" />
           </View>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
+        </View>
+      </SafeAreaView>
     </KeyboardAwareScrollView>
   );
 }
@@ -338,6 +321,11 @@ const styles = StyleSheet.create({
     top: 8,
     fontSize: 20,
     color: "#789",
+  },
+  pate: {
+    width: 100,
+    height: 100,
+    backgroundColor: "#fff",
   },
 });
 const pickerSelectStyles = StyleSheet.create({

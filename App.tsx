@@ -22,7 +22,7 @@ export default function App() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName = "ios-information-circle";
+            let iconName = "ios-create";
 
             if (route.name === "Input") {
               iconName = focused 

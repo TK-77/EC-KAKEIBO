@@ -14,7 +14,6 @@ export function Main() {
 
   return (
     <View style={styles.container}>
-      <Text>詳細画面</Text>
       <Button onPress={toBack} title="入力画面に戻る" />
       <View
         style={{ 
