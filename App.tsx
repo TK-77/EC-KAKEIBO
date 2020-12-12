@@ -71,12 +71,9 @@ export default function App() {
   };
 
   const feeResultView = Math.round(feeResult);
-
   const costResultView = Math.round(costResult);
 
-
-
-  const shopCostList = [19500, 50000, 100000];
+  const shopCostList = [19500, 50000, 100000, 0, 4900, 0];
 
   const changeShopCost = (planName: string) => {
     switch (planName) {
@@ -88,6 +85,15 @@ export default function App() {
         break;
       case "mega":
         setShopCost(shopCostList[2]);
+        break;
+      case "koguti":
+        setShopCost(shopCostList[3]);
+        break;
+      case "oguti":
+        setShopCost(shopCostList[4]);
+        break;
+      case "yahoo!shopping":
+        setShopCost(shopCostList[5]);
         break;
       default: 0;
         break;
