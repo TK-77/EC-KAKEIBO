@@ -26,6 +26,7 @@ const { width } = Dimensions.get("screen");
 const containerPaddingTop =
   Platform.OS === "ios" ? 0 : RNStatusBar.currentHeight;
 
+
 export default function App() {
   const [sales, setSales] = React.useState("");
   const [ad, setAd] = React.useState("");
@@ -33,7 +34,7 @@ export default function App() {
   const [costResult, setCostResult] = React.useState(0);
   const [shopCost, setShopCost] = React.useState(0);
 
-  const rates = [0.024, 0.026, 0.028, 0.03, 0.04];
+  const rates = [0.025, 0.027, 0.029, 0.031, 0.041];
 
   const changeRate = (sales: number) => {
     if (sales > 30000000) {
@@ -54,7 +55,7 @@ export default function App() {
     return feeResult;
   };
 
-  const calcCost = (ad: number, feeResult: number, shopCost: number) => {
+  const calcCost = ( ad: number, feeResult: number, shopCost: number) => {
     const costResult = ad + feeResult + shopCost;
     return costResult;
   };
@@ -65,7 +66,14 @@ export default function App() {
 
     setFeeResult(feeResult);
     setCostResult(costResult);
+    
   };
+
+  const feeResultView = Math.round(feeResult);
+
+  const costResultView = Math.round(costResult);
+
+
 
   const shopCostList = [19500, 50000, 100000];
 
@@ -98,7 +106,7 @@ export default function App() {
             <Text style={styles.titleText}>EC家計簿</Text>
             {/* </View> */}
 
-            <Text style={styles.boxname}>モール</Text>
+            <Text style={styles.boxname}>ECモール</Text>
             <View style={styles.selectBox}>
               <RNPickerSelect
                 onValueChange={(value: string) => console.log(value)}
@@ -150,14 +158,18 @@ export default function App() {
               />
 
               <Text style={styles.boxname}>出店費用</Text>
-              <Text style={styles.textBox}>{shopCost}</Text>
+              <Text style={styles.textBox}>{shopCost.toLocaleString()}</Text>
 
               <Text style={styles.boxname}>手数料</Text>
-              <Text style={styles.textBox}>{feeResult}</Text>
+              <Text style={styles.textBox}>
+                {feeResultView.toLocaleString()}
+              </Text>
 
               <Text style={styles.boxname}>コスト合計</Text>
               <View style={styles.textBox}>
-                <Text style={styles.textInput}>{costResult}</Text>
+                <Text style={styles.textInput}>
+                  {costResultView.toLocaleString()}
+                </Text>
               </View>
 
               <View style={styles.button}>
