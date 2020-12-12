@@ -22,6 +22,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 // import Select from "react-select";
 // import { RadioButton } from "react-native-paper";
 import RNPickerSelect from "react-native-picker-select";
+import { round } from "react-native-reanimated";
+import { Avatar } from "react-native-elements";
 
 const { width } = Dimensions.get("screen");
 
@@ -33,8 +35,8 @@ export function Input() {
   const navigation = useNavigation();
   // Main画面に移動する関数
   const toMain = () => {
-    navigation.navigate("Main")
-  }
+    navigation.navigate("Main");
+  };
 
   const [sales, setSales] = React.useState("");
   const [ad, setAd] = React.useState("");
@@ -213,7 +215,7 @@ export function Input() {
               style={styles.textBox}
               placeholder="入力してください"
               onChangeText={(text) => setAd(text)}
-              value={ad}
+              value={Number(ad.replace(",", "")).toLocaleString()}
               // text-align="right"
               keyboardType="numeric"
             />
@@ -230,14 +232,25 @@ export function Input() {
                 {costResultView.toLocaleString()}
               </Text>
             </View>
-
-            <View style={styles.button}>
+            <View style={styles.avatorPosition}>
+              <Avatar
+                size={70}
+                rounded
+                overlayContainerStyle={{ backgroundColor: "#2aefd1" }}
+                title="計算"
+                // fontweight={}
+                titleStyle={styles.buttonText}
+                onPress={calcResult}
+                activeOpacity={0.7}
+              />
+            </View>
+            {/* <View style={styles.button}>
               <TouchableOpacity>
                 <Text style={styles.buttonText} onPress={calcResult}>
                   計算
                 </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={styles.pate}></View>
             <StatusBar style="auto" />
           </View>
@@ -292,14 +305,15 @@ const styles = StyleSheet.create({
     // position: "absolute",
     right: -150,
     // bottom: 1,
-    backgroundColor: "#33FF99",
+    backgroundColor: "#2aefd1",
     width: 100,
     borderWidth: 2,
     borderRadius: 15,
     padding: 5,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 25,
+    fontWeight: "bold",
     color: "black",
   },
   radioText: {
@@ -326,6 +340,9 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: "#fff",
+  },
+  avatorPosition: {
+    alignItems: "flex-end",
   },
 });
 const pickerSelectStyles = StyleSheet.create({

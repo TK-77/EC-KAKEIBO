@@ -1,7 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Image, Button, StyleSheet, Text, View } from "react-native";
+import { Avatar } from "react-native-elements";
+import logo from "../assets/MainImage.png";
 
 export function Main() {
   // 画面遷移の定義
@@ -14,16 +16,16 @@ export function Main() {
 
   return (
     <View style={styles.container}>
-      <Button onPress={toBack} title="入力画面に戻る" />
-      <View
-        style={{ 
-          flex: 1, 
-          justifyContent: "center", 
-          alignItems: "center" 
+      <Image
+        source={logo}
+        style={{
+          width: 400,
+          height: 750,
+          marginTop: 50,
+          resizeMode: "contain",
         }}
-      >
-        <Text>Input</Text>
-      </View>
+      />
+
       <StatusBar style="auto" />
     </View>
   );
