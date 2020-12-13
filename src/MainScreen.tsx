@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { Image, StyleSheet, Text, View, Dimensions } from "react-native";
 import { PieChart, ProgressChart} from "react-native-chart-kit";
 import { skipPartiallyEmittedExpressions } from "typescript";
+import ImagePic from "../assets/ImagePic.png";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -11,29 +12,36 @@ const windowHeight = Dimensions.get("window").height;
 const data = [
   {
     name: "出店費用",
-    population: 2150,
-    color: "#33CC00",
+    population: 150,
+    color: "#1a5090",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
     name: "広告",
     population: 200,
-    color: "#0099FF",
+    color: "#538dc2",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
-    name: "手数料",
-    population: 521,
-    color: "red",
+    name: "ポイントコスト",
+    population: 61,
+    color: "#da7531",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
     name: "クーポン",
     population: 80,
-    color: "#7F7F7F",
+    color: "#edb215",
+    legendFontColor: "#7F7F7F",
+    legendFontSize: 15,
+  },
+  {
+    name: "手数料",
+    population: 340,
+    color: "#a0a0a0",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
@@ -68,6 +76,15 @@ export function Main() {
           absolute
         />
       </View>
+      <Image
+        source={ImagePic}
+        style={{
+          width: 400,
+          height: 350,
+          marginTop: 300,
+          resizeMode: "contain",
+        }}
+      />
     </View>
   );
 }
@@ -85,7 +102,7 @@ const styles = StyleSheet.create({
   },
   pieChartView: {
     position: "absolute",
-    top: 100,
+    top: 120,
   },
   text: {
     fontSize: 25,
