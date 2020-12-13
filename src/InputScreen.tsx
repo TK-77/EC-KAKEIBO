@@ -82,6 +82,7 @@ export function Input() {
   const [shopCost, setShopCost] = React.useState(0);
   const [plan, setPlan] = React.useState([{ label: "", value: "" }]);
 
+
   const rates = [0.025, 0.027, 0.029, 0.031, 0.041];
 
   const changeRate = (sales: number) => {
@@ -239,7 +240,7 @@ export function Input() {
 
             <Text style={styles.boxname}>当月売上</Text>
             <InputText
-              placeholder="入力してください"
+              placeholder="入力してください                 |"
               onChangeText={(text: any) => setSales(text)}
               value={sales}
               keyboardType="numeric"
@@ -248,7 +249,7 @@ export function Input() {
             <Text style={styles.boxname}>広告費</Text>
 
             <InputText
-              placeholder="入力してください"
+              placeholder="入力してください                 |"
               onChangeText={(text: any) => setAd(text)}
               // value={Number(ad.replace(",", "")).toLocaleString()}
               keyboardType="numeric"
@@ -327,13 +328,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: 250,
     height: 50,
-    padding: 3,
+    padding: 5,
     marginRight: 5,
     marginBottom: 15,
-    // textAlign: 'right',
+    textAlign: "right",
+    paddingRight: 5,
   },
   textInput: {
     fontSize: 20,
+    textAlign: "right",
+    paddingRight: 5,
   },
   button: {
     alignItems: "center",
