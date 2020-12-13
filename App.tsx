@@ -10,6 +10,7 @@ import "react-native-gesture-handler";
 // Screens
 import { Input } from "./src/InputScreen";
 import { Main } from "./src/MainScreen";
+import { Chart } from "./src/ChartScreen";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -29,7 +30,13 @@ export default function App() {
                 ? "ios-create" 
                 : "ios-create";
             } else if (route.name === "Main") {
-              iconName = focused ? "ios-podium" : "ios-podium";
+              iconName = focused 
+                ? "ios-disc" 
+                : "ios-disc";
+            } else if (route.name === "Chart") {
+              iconName = focused 
+                ? "ios-podium" 
+                : "ios-podium";
             }
 
             // You can return any component that you like here!
@@ -43,6 +50,7 @@ export default function App() {
       >
         <Tab.Screen name="Input" component={Input} />
         <Tab.Screen name="Main" component={Main} />
+        <Tab.Screen name="Chart" component={Chart} />
       </Tab.Navigator>
 
       {/* <Stack.Navigator>

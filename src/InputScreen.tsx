@@ -215,7 +215,7 @@ export function Input() {
               style={styles.textBox}
               placeholder="入力してください"
               onChangeText={(text) => setAd(text)}
-              value={Number(ad.replace(",", "")).toLocaleString()}
+              // value={Number(ad.replace(",", "")).toLocaleString()}
               // text-align="right"
               keyboardType="numeric"
             />
