@@ -22,13 +22,50 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 // import Select from "react-select";
 // import { RadioButton } from "react-native-paper";
 import RNPickerSelect from "react-native-picker-select";
-import { round } from "react-native-reanimated";
+import { onChange, round } from "react-native-reanimated";
 import { Avatar } from "react-native-elements";
 
 const { width } = Dimensions.get("screen");
 
 const containerPaddingTop =
   Platform.OS === "ios" ? 0 : RNStatusBar.currentHeight;
+
+const InputText = ({ ...rest }) => {
+  const [value, setValue] = useState("");
+  const [isFocus, setFocus] = useState(false);
+  const handleFocus = () => setFocus(true);
+  const handleBlur = () => setFocus(false);
+  const handleChange = (value: string) => {
+    const onChangeText = rest["onChangeText"];
+    onChangeText && onChangeText(value);
+    setValue(value);
+  };
+  const isBlank = value === "";
+  const isValid = /^[-]?(\d+)[.]?(\d+)?$/.test(value);
+  const displayValue = (() => {
+    if (isFocus || !isValid) {
+      return value;
+    }
+    if (isValid) {
+      return (+value).toLocaleString();
+    }
+    return "";
+  })();
+  const displayStyle = {
+    backgroundColor: isValid || isBlank ? "#FFF" : "#FFBEDA",
+  };
+
+  return (
+    <TextInput
+      {...rest}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onChangeText={handleChange}
+      value={displayValue}
+      style={styles.textBox}
+    />
+  );
+};
 
 export function Input() {
   // 画面遷移のやつ
@@ -74,6 +111,8 @@ export function Input() {
   const calcResult = () => {
     const feeResult = calcFee(Number(sales));
     const costResult = calcCost(Number(ad), feeResult, shopCost);
+
+    // alert(sales);
 
     setFeeResult(feeResult);
     setCostResult(costResult);
@@ -127,9 +166,6 @@ export function Input() {
     // "yahoo!": [
     [{ label: "Yahoo!ショッピング", value: "yahoo!shopping" }],
   ];
-
-  const newad = setAd.toLocaleString();
-  console.log(newad);
 
   // const mallList = [planR, planA, planY];
 
@@ -202,21 +238,19 @@ export function Input() {
             </View>
 
             <Text style={styles.boxname}>当月売上</Text>
-            <TextInput
-              style={styles.textBox}
+            <InputText
               placeholder="入力してください"
-              onChangeText={(text) => setSales(text)}
+              onChangeText={(text: any) => setSales(text)}
               value={sales}
               keyboardType="numeric"
             />
 
             <Text style={styles.boxname}>広告費</Text>
-            <TextInput
-              style={styles.textBox}
+
+            <InputText
               placeholder="入力してください"
-              onChangeText={(text) => setAd(text)}
+              onChangeText={(text: any) => setAd(text)}
               // value={Number(ad.replace(",", "")).toLocaleString()}
-              // text-align="right"
               keyboardType="numeric"
             />
 
@@ -296,6 +330,7 @@ const styles = StyleSheet.create({
     padding: 3,
     marginRight: 5,
     marginBottom: 15,
+    // textAlign: 'right',
   },
   textInput: {
     fontSize: 20,
